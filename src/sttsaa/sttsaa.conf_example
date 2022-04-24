@@ -1,0 +1,13 @@
+### variables
+terrad="/usr/local/bin/terrad"
+tDir="tmpdir"
+steGateway="terra1x2q544xgumzukn0cnqyzpv3l576acxsp2qaaep"
+sttSaaContract="${hDir}/sttSaaContract.csv"
+### starterra
+aToken="xxxxxxxxxx"
+tRepo="xxxxxxxxxx"
+Msg="Adding datafile from $(date +%Y-%m-%d\ %H:%M:%S)"
+Branch="main"
+LogFile="${hDir}/transfer.log"
+twoHoursAgo=$(date -d "2 hour ago" +%s)
+sValue=50

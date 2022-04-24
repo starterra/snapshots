@@ -12,3 +12,8 @@
 
 [/fees_to_redistribute](./fees_to_redistribute)
 <br> Part of transaction fees, that will be distributed between strong hodlers.
+
+### 3. Source scripts.
+
+[/src](./src)
+<br> Scripts used to generate Single Assets Staking and Fees distribution.
