@@ -15,7 +15,7 @@ function fnError()
         "SrcFlNoExist") echo "Error reported at $(date) Source file: ${2} does not exist." >> ${LogFile}
                         exit 1;;
         "TerraQuery")   echo "Error reported at $(date). Terrad query is not valid. Adjust command." >> ${LogFile}
-                        echo ${jOut} >> ${LogFile}
+                        echo ${2} >> ${LogFile}
                         exit 1;;
         "DstFlNoExist") echo "Error reported at $(date). Destination file: ${outFile} does not exist." >> ${LogFile}
                         exit 1;;
@@ -122,9 +122,17 @@ function fnSttUni()
             echo Stt: "${cName}"
 
             ### query first block
-            jOut=$((fnQuery "${terrad}" "${cAddress}" "${MsgQuery}" "${7}") 2>&1)
+            jOut=$(fnQuery "${terrad}" "${cAddress}" "${MsgQuery}" "${7}")
             if [ $? -ne 0 ]; then
-                fnError "TerraQuery"
+                sleep 5
+                jOut=$(fnQuery "${terrad}" "${cAddress}" "${MsgQuery}" "${7}")
+                if [ $? -ne 0 ]; then
+                    sleep 5
+                    jOut=$(fnQuery "${terrad}" "${cAddress}" "${MsgQuery}" "${7}")
+                    if [ $? -ne 0 ]; then
+                        fnError "TerraQuery" "${jOut}"
+                    fi
+                fi
             fi
 
             while [ "${aDr}" != "null" ]; do
@@ -141,7 +149,15 @@ function fnSttUni()
                 ### query next blocks
                 jOut=$(fnQuery "${terrad}" "${cAddress}" "${MsgQuery}" "${7}")
                 if [ $? -ne 0 ]; then
-                    fnError "TerraQuery"
+                    sleep 5
+                    jOut=$(fnQuery "${terrad}" "${cAddress}" "${MsgQuery}" "${7}")
+                    if [ $? -ne 0 ]; then
+                        sleep 5
+                        jOut=$(fnQuery "${terrad}" "${cAddress}" "${MsgQuery}" "${7}")
+                        if [ $? -ne 0 ]; then
+                            fnError "TerraQuery" "${jOut}"
+                        fi
+                    fi
                 fi
 
             done
